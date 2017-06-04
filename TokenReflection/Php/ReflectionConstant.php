@@ -310,7 +310,12 @@ class ReflectionConstant implements IReflection, TokenReflection\IReflectionCons
 	 */
 	public function getOriginalValueDefinition()
 	{
-		return token_get_all($this->getValueDefinition());
+		$valueDefinition = $this->getValueDefinition();
+		if (PHP_VERSION_ID >= 70000) {
+			return token_get_all($valueDefinition, TOKEN_PARSE);
+		}
+
+		return token_get_all($valueDefinition);
 	}
 
 	/**

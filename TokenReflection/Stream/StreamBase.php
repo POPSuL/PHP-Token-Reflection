@@ -77,7 +77,12 @@ abstract class StreamBase implements SeekableIterator, Countable, ArrayAccess, S
 	 */
 	protected final function processSource($source)
 	{
-		$stream = @token_get_all(str_replace(array("\r\n", "\r"), "\n", $source));
+		$source = str_replace(array("\r\n", "\r"), "\n", $source);
+		if (PHP_VERSION_ID >= 70000) {
+			$stream = @token_get_all($source, TOKEN_PARSE);
+		} else {
+			$stream = @token_get_all($source);
+		}
 
 		static $checkLines = array(T_COMMENT => true, T_WHITESPACE => true, T_DOC_COMMENT => true, T_INLINE_HTML => true, T_ENCAPSED_AND_WHITESPACE => true, T_CONSTANT_ENCAPSED_STRING => true);
 
