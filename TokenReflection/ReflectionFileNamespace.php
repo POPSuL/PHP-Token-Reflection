@@ -385,7 +385,7 @@ class ReflectionFileNamespace extends ReflectionElement
 							->findMatchingBracket()
 							->next();
 
-						continue;
+						break;
 					}
 
 					$function = new ReflectionFunction($tokenStream, $this->getBroker(), $this);
